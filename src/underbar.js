@@ -259,6 +259,17 @@
   // Like extend, but doesn't ever overwrite a key that already
   // exists in obj
   _.defaults = function(obj) {
+    //I did not convert args into array as the comments in testing suggests because
+    //I am using a for loop on arguments and for in on actual objects within the 
+    //arguments object
+    for (var i = 0; i < arguments.length; i++) {
+      for (var key in arguments[i]) {
+        if (typeof obj[key] === 'undefined') {
+          obj[key] = arguments[i][key];
+        }
+      }
+    }
+    return obj;
   };
 
 
