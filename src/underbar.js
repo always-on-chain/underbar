@@ -115,7 +115,6 @@
       		uniqueValues.push(element);
       	}
       })
-    console.log(iteratedValues, uniqueValues)
     return uniqueValues;
   };
 
@@ -345,6 +344,15 @@
   // input array. For a tip on how to make a copy of an array, see:
   // http://mdn.io/Array.prototype.slice
   _.shuffle = function(array) {
+  	var randomized = [];
+  	while (randomized.length !== array.length) {
+  		var index = Math.floor(Math.random() * array.length);
+  		var value = array[index]
+  		if (!_.contains(randomized, value)) {
+  			randomized.push(value);
+  		}
+  	}
+  	return randomized;
   };
 
 
