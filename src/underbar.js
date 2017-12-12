@@ -105,22 +105,17 @@
   // Produce a duplicate-free version of the array.
   _.uniq = function(array, isSorted, iterator) {
     var uniqueValues = [];
-    var newValues = [];
-    if (!iterator) {
-      _.each(array, function(element) {
-        if (!_.contains(uniqueValues, element)) {
-          uniqueValues.push(element);
-        }
+    var iteratedValues = [];
+    var containsElement;
+
+    _.each(array, function(element) {
+    	iterator ? containsElement = iterator(element) : containsElement = element;
+      	if (!_.contains(iteratedValues, containsElement)) {
+      		iteratedValues.push(containsElement);
+      		uniqueValues.push(element);
+      	}
       })
-    } else {
-      var newValues = [];
-      _.each(array, function(element) {
-        if (!_.contains(newValues, iterator(element))) {
-          newValues.push(iterator(element));
-          uniqueValues.push(element);
-        }
-      })
-    }
+    console.log(iteratedValues, uniqueValues)
     return uniqueValues;
   };
 
@@ -335,6 +330,7 @@
   // parameter. For example _.delay(someFunction, 500, 'a', 'b') will
   // call someFunction('a', 'b') after 500ms
   _.delay = function(func, wait) {
+  	return setTimeout.apply(func, arguments);
   };
 
 
