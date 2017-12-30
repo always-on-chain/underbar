@@ -108,6 +108,10 @@
     var iteratedValues = [];
     var containsElement;
 
+    if (isSorted) {
+      array = _.sortBy(array);
+    }
+ 
     _.each(array, function(element) {
     	iterator ? containsElement = iterator(element) : containsElement = element;
       	if (!_.contains(iteratedValues, containsElement)) {
@@ -470,12 +474,13 @@
   //
   // Note: This is difficult! It may take a while to implement.
   _.throttle = function(func, wait) {
-  	var lastInvoked;
-
-  	if (Date.now() === (lastInvoked + wait)) {
-  		lastInvoked = Date.now()
-  		return func;
-  	}
+    return _.once(function() {
+      var invokeTimeout = function() {
+        func()
+        setTimeout(invokeTimeout, Date.now() - wait)
+      }
+      invokeTimeout();
+    });
   };
 }());
 
